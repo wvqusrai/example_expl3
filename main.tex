@@ -1,0 +1,9 @@
+\documentclass{article}
+\usepackage{xparse, siunitx}
+\ExplSyntaxOn
+\NewDocumentCommand { \calcnum } { m }
+{ \num { \fp_to_scientific:n {#1} } }
+\ExplSyntaxOff
+\begin{document}
+\calcnum { 2 pi * sin ( 2.3 ^ 5 ) }
+\end{document}

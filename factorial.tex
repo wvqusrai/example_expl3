@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{xparse}
+\usepackage{amsmath}
+\ExplSyntaxOn
+\NewDocumentCommand { \loopfactorial } { mm }{ 
+    %\int_step_function:nnnN {#1}{1}{#2} \my_factorial:n
+    \int_step_inline:nnnn {#1}{1}{#2} {
+        \my_factorial:n {##1}
+        % 注意##1 #2
+        \int_compare:nTF{##1 = #2}{ }{,}
+    }
+}
+
+\NewDocumentCommand { \factorial } { m }{ 
+    \my_factorial:n { #1 }
+}
+\cs_new_protected:Npn \my_factorial:n #1 {
+    \int_case:nnF{ #1  }{
+        {0}{ 1 }
+        {1}{ 1 }
+    }{
+        \int_eval:n { #1 * \factorial{\int_eval:n{#1-1}} }
+        %   #1 * \factorial{\int_eval:n{#1-1}}
+    }
+}
+%\cs_generate_variant:Nn \int_eval:n { f,x }
+\ExplSyntaxOff
+\begin{document}
+\loopfactorial{3}{7}
+
+$\text{for $k = 1$, $k{+}{+}$, while $k < i$}$
+
+\factorial{0}
+
+\factorial{1}
+
+\factorial{2}
+
+\factorial{3}
+
+\factorial{4}
+
+\factorial{5}
+
+\factorial{6}
+\end{document}
